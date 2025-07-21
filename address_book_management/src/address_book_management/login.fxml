@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address_book_management.LoginController">
    <children>
       <Label alignment="CENTER" prefHeight="95.0" prefWidth="600.0" style="-fx-background-color: #E5E4E2;" text="Address Book Management Login Page">

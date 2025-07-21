@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="address_book_management.RegistrationController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address_book_management.RegistrationController">
    <children>
       <Label alignment="CENTER" layoutX="-1.0" prefHeight="95.0" prefWidth="600.0" style="-fx-background-color: #E5E4E2;" text="Address Book Management Reg. Page">
          <font>
