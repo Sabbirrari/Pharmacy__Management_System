@@ -1,6 +1,9 @@
 package address_book_management;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,16 +16,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-public class LoginController implements Initializable  {
+public class LoginController implements Initializable {
     
     @FXML
-    private TextField textfield1;  // email
+    private TextField textfield1;  // Email
     @FXML
-    private TextField textfield2;  // password
+    private TextField textfield2;  // Phone (used as password)
     @FXML
-    private Button btn1;  // login button
+    private Button btn1;  // Login button
     @FXML
-    private Button btn2;  // create new account button
+    private Button btn2;  // Create new account button
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -32,29 +35,34 @@ public class LoginController implements Initializable  {
     @FXML
     private void login(ActionEvent event) {
         String email = textfield1.getText().trim();
-        String password = textfield2.getText().trim();
+        String phone = textfield2.getText().trim();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Login Error", "Please enter email and password");
+        if (email.isEmpty() || phone.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Login Error", "Please enter email and phone");
             return;
         }
 
-        if (email.equals("user@gmail.com") && password.equals("1234")) {
-            showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome " + email + "!");
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String query = "SELECT * FROM users WHERE email = ? AND phone = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, email);
+            stmt.setString(2, phone);
+            ResultSet rs = stmt.executeQuery();
 
-            try {
+            if (rs.next()) {
+                showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome " + email + "!");
+
                 Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
                 Stage stage = (Stage) btn1.getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
+                stage.setScene(new Scene(root));
                 stage.setTitle("Dashboard");
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Loading Error", "Could not open dashboard");
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid email or phone");
             }
 
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid email or password");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Database Error", "Could not verify login");
         }
     }
 
@@ -63,8 +71,7 @@ public class LoginController implements Initializable  {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("registration.fxml"));
             Stage stage = (Stage) btn2.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.setTitle("Registration");
         } catch (Exception e) {
             e.printStackTrace();

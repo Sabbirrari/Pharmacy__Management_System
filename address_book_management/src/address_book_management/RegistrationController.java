@@ -1,6 +1,8 @@
 package address_book_management;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,11 +18,11 @@ import javafx.scene.Scene;
 public class RegistrationController implements Initializable {
 
     @FXML
-    private TextField textfield3;  // e.g. Name
+    private TextField textfield3;  // Name
     @FXML
-    private TextField textfield4;  // e.g. Email
+    private TextField textfield4;  // Email
     @FXML
-    private TextField textfield5;  // e.g. Phone or Password
+    private TextField textfield5;  // Phone (used as password here)
     @FXML
     private Button btn3;  // Submit/Register button
     @FXML
@@ -33,37 +35,48 @@ public class RegistrationController implements Initializable {
 
     @FXML
     private void submit(ActionEvent event) {
-        String name = textfield3.getText();
-        String email = textfield4.getText();
-        String phone = textfield5.getText();
+        String name = textfield3.getText().trim();
+        String email = textfield4.getText().trim();
+        String phone = textfield5.getText().trim();
 
         if (name.isEmpty() || email.isEmpty() || phone.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Form Error!", "Please enter all fields");
             return;
         }
 
-        // Here, you can add actual registration logic like saving user to DB
-        // For demo, just show success
-        showAlert(Alert.AlertType.INFORMATION, "Registration Successful", "Welcome " + name + "!");
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String query = "INSERT INTO users (name, email, phone) VALUES (?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, name);
+            stmt.setString(2, email);
+            stmt.setString(3, phone);
+            stmt.executeUpdate();
 
-        // Clear fields after registration
-        textfield3.clear();
-        textfield4.clear();
-        textfield5.clear();
+            showAlert(Alert.AlertType.INFORMATION, "Registration Successful", "Welcome " + name + "!");
+            clearFields();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Database Error", "Could not save user. Try again.");
+        }
     }
 
     @FXML
     private void backlogin(ActionEvent event) {
         try {
-            // Load login screen and set scene
             Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
             Stage stage = (Stage) btn4.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.setTitle("Login");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void clearFields() {
+        textfield3.clear();
+        textfield4.clear();
+        textfield5.clear();
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

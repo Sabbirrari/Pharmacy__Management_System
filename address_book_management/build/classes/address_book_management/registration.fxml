@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address_book_management.RegistrationController">
+   <children>
+      <Label alignment="CENTER" layoutX="-1.0" prefHeight="95.0" prefWidth="600.0" style="-fx-background-color: #E5E4E2;" text="Address Book Management Reg. Page">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <TextField fx:id="textfield3" layoutX="225.0" layoutY="127.0" prefHeight="37.0" prefWidth="150.0" promptText="Enter name" />
+      <TextField fx:id="textfield4" layoutX="225.0" layoutY="180.0" prefHeight="37.0" prefWidth="150.0" promptText="Enter email" />
+      <TextField fx:id="textfield5" layoutX="225.0" layoutY="233.0" prefHeight="37.0" prefWidth="150.0" promptText="Create a password" />
+      <Button fx:id="btn3" layoutX="272.0" layoutY="294.0" mnemonicParsing="false" onAction="#submit" text="Submit" />
+      <Button fx:id="btn4" layoutX="452.0" layoutY="350.0" mnemonicParsing="false" onAction="#backlogin" text="Go back Login Page" />
+   </children>
+</AnchorPane>

@@ -1,32 +1,59 @@
 package address_book_management;
 
+import javafx.beans.property.SimpleStringProperty;
+
 public class Contact {
-    private String name;
-    private String address;
-    private String phone;
-    private String email;
-    private String gender;
+    private SimpleStringProperty name;
+    private SimpleStringProperty address;
+    private SimpleStringProperty phone;
+    private SimpleStringProperty email;
+    private SimpleStringProperty gender;
 
     public Contact(String name, String address, String phone, String email, String gender) {
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.gender = gender;
+        this.name = new SimpleStringProperty(name);
+        this.address = new SimpleStringProperty(address);
+        this.phone = new SimpleStringProperty(phone);
+        this.email = new SimpleStringProperty(email);
+        this.gender = new SimpleStringProperty(gender);
     }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getName() {
+        return name.get();
+    }
 
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
+    public void setName(String value) {
+        name.set(value);
+    }
 
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public String getAddress() {
+        return address.get();
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setAddress(String value) {
+        address.set(value);
+    }
 
-    public String getGender() { return gender; }
-    public void setGender(String gender) { this.gender = gender; }
-} 
+    public String getPhone() {
+        return phone.get();
+    }
+
+    public void setPhone(String value) {
+        phone.set(value);
+    }
+
+    public String getEmail() {
+        return email.get();
+    }
+
+    public void setEmail(String value) {
+        email.set(value);
+    }
+
+    public String getGender() {
+        return gender.get();
+    }
+
+    public void setGender(String value) {
+        gender.set(value);
+    }
+}

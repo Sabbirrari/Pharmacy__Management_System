@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address_book_management.LoginController">
+   <children>
+      <Label alignment="CENTER" prefHeight="95.0" prefWidth="600.0" style="-fx-background-color: #E5E4E2;" text="Address Book Management Login Page">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <TextField fx:id="textfield2" layoutX="212.0" layoutY="181.0" prefHeight="38.0" prefWidth="150.0" promptText="enter pasword" />
+      <TextField fx:id="textfield1" layoutX="212.0" layoutY="125.0" prefHeight="38.0" prefWidth="150.0" promptText="Enter email" />
+      <Button fx:id="btn1" layoutX="261.0" layoutY="238.0" mnemonicParsing="false" onAction="#login" text=" Login " />
+      <Button fx:id="btn2" layoutX="212.0" layoutY="281.0" mnemonicParsing="false" onAction="#createnew" prefHeight="26.0" prefWidth="150.0" text="Create a new account" />
+   </children>
+</AnchorPane>
