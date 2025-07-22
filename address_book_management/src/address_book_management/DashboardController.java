@@ -141,7 +141,7 @@ public class DashboardController implements Initializable {
         }
 
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String query = "DELETE FROM contacts WHERE name = ? AND phone = ?"; // using name & phone as key
+            String query = "DELETE FROM contacts WHERE name = ? AND phone = ?"; 
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, selected.getName());
             stmt.setString(2, selected.getPhone());

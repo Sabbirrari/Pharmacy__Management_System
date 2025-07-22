@@ -22,7 +22,7 @@ public class RegistrationController implements Initializable {
     @FXML
     private TextField textfield4;  // Email
     @FXML
-    private TextField textfield5;  // Phone (used as password here)
+    private TextField textfield5;  // Phone 
     @FXML
     private Button btn3;  // Submit/Register button
     @FXML

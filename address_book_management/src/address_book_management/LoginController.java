@@ -21,7 +21,7 @@ public class LoginController implements Initializable {
     @FXML
     private TextField textfield1;  // Email
     @FXML
-    private TextField textfield2;  // Phone (used as password)
+    private TextField textfield2;  // Phone 
     @FXML
     private Button btn1;  // Login button
     @FXML
