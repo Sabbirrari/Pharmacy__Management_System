@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,15 +36,34 @@ public class DashboardController implements Initializable {
     private Button btn7;  // Update
     @FXML
     private TableView<Contact> tableview;
+    @FXML
+    private TextField c_search;
+    @FXML
+    private Button btn8; // logout
 
     ObservableList<Contact> contactList = FXCollections.observableArrayList();
-    @FXML
-    private Button btn8;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setupTable();
         loadContactsFromDB();
+
+        // Live search implementation
+        FilteredList<Contact> filteredData = new FilteredList<>(contactList, p -> true);
+        c_search.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(contact -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                return contact.getName().toLowerCase().contains(lowerCaseFilter)
+                        || contact.getPhone().toLowerCase().contains(lowerCaseFilter)
+                        || contact.getEmail().toLowerCase().contains(lowerCaseFilter)
+                        || contact.getAddress().toLowerCase().contains(lowerCaseFilter)
+                        || contact.getGender().toLowerCase().contains(lowerCaseFilter);
+            });
+            tableview.setItems(filteredData);
+        });
 
         tableview.setOnMouseClicked(event -> {
             Contact selected = tableview.getSelectionModel().getSelectedItem();
@@ -97,7 +117,6 @@ public class DashboardController implements Initializable {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            // Optional: show alert if needed
         }
     }
 
@@ -191,7 +210,6 @@ public class DashboardController implements Initializable {
             int affected = stmt.executeUpdate();
 
             if (affected > 0) {
-                // update in observable list
                 selected.setName(name);
                 selected.setAddress(address);
                 selected.setPhone(phone);
@@ -225,15 +243,14 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-private void logout(ActionEvent event) {
-    try {
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Login");
-    } catch (Exception e) {
-        e.printStackTrace();
+    private void logout(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-}
-
 }
